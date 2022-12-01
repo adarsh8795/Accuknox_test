@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class eater {
+    public :
+    
+    int eaterId;
+    
+    vector<int>foodItem;
+};
+
+
+int main()
+{
+    cout<<"Please tell the number of eaters : ";
+    int n_eater;
+    cin>>n_eater;
+    
+    eater obj[n_eater];
+    map<int,int>mp;
+    
+    for(int i=0;i<n_eater;i++){
+        cout<<"Please Enter eaterID for eater "<<i+1<<" : ";
+        cin>>obj[i].eaterId;
+        int temp;
+        cout<<"Please Enter No of food items he/she orders : ";
+        cin>>temp;
+        set<int>st;
+        cout<<"Please enter details of fooditemID for eater no "<<i+1<<" : \n";
+        for(int k=0;k<temp;k++){
+            int temp2;
+            cout<<"Please Enter fooditemID of item "<<k+1<<" : ";
+            cin>>temp2;
+            if(st.find(temp2)!=st.end()){
+                cout<<"Sorry : fooditemID is already present in this order...Re enter another item...\n";
+                k--;
+            }
+            else{
+                obj[i].foodItem.push_back(temp2);
+                st.insert(temp2);
+                
+                mp[temp2]++;
+            }
+        }
+        cout<<endl<<endl;
+    }
+    
+    vector<pair<int,int>>ans;
+    
+    for(auto it : mp){
+        ans.push_back({it.second,it.first});
+    }
+    
+    sort(ans.begin(),ans.end());
+    
+    
+    cout<<"fooditemID of max ordered items are : \n";
+    int itr = ans.size()-1;
+    for(int i=0;i<3;i++){
+        cout<<ans[itr].second<<" "<<ans[itr].first<<"\n";
+        itr--;
+        if(itr<0 && i<2){
+            cout<<"only above items are ordered...(less than 3 items)";
+            break;
+        }
+    }
+    return 0;
+}
